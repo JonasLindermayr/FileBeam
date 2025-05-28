@@ -22,7 +22,7 @@ func GenerateToken(userId uuid.UUID, expiresAt time.Time) (string, error) {
 	return token.SignedString(secretKey)
 }
 
-func DecodeToken(tokenString string) (types.LogoutInput, error) {
+func DecodeToken(tokenString string) (types.JWT, error) {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("unexpected signing method")
@@ -31,16 +31,16 @@ func DecodeToken(tokenString string) (types.LogoutInput, error) {
 	})
 
 	if err != nil {
-		return types.LogoutInput{}, err
+		return types.JWT{}, err
 	}
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		userId, ok := claims["userId"].(string)
 		if !ok {
-			return types.LogoutInput{}, errors.New("userId claim missing or invalid")
+			return types.JWT{}, errors.New("userId claim missing or invalid")
 		}
-		return types.LogoutInput{UUID: userId}, nil
+		return types.JWT{UUID: userId}, nil
 	} else {
-		return types.LogoutInput{}, errors.New("invalid token claims")
+		return types.JWT{}, errors.New("invalid token claims")
 	}
 }

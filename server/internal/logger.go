@@ -6,7 +6,6 @@ import (
 	"github.com/fatih/color"
 )
 
-
 const (
 	INFO = iota
 	WARNING
@@ -21,8 +20,8 @@ var logTypeLabels = []string{
 	"DEBUG",
 }
 
-var prefix = "[Chronos] - "
-var prefixMigrate = "[Chronos-Migration] - "
+var prefix = "[FileBeam] - "
+var prefixMigrate = "[FileBeam-Migration] - "
 
 func Log(message string, logType int) {
 	var logText string
@@ -34,16 +33,16 @@ func Log(message string, logType int) {
 	}
 
 	switch logType {
-		case INFO:
-			color.Cyan(logText)
-		case WARNING:
-			color.Yellow(logText)
-		case ERROR:
-			color.Red(logText)
-		case DEBUG:
-			color.White(logText)
-		default:
-			fmt.Println(logText)
+	case INFO:
+		color.Cyan(logText)
+	case WARNING:
+		color.Yellow(logText)
+	case ERROR:
+		color.Red(logText)
+	case DEBUG:
+		color.White(logText)
+	default:
+		fmt.Println(logText)
 	}
 }
 
@@ -57,15 +56,15 @@ func LogMigrate(message string, logType int) {
 	}
 
 	switch logType {
-		case INFO:
-			color.Cyan(logText)
-		case WARNING:
-			color.Yellow(logText)
-		case ERROR:
-			color.Red(logText)
-		case DEBUG:
-			color.White(logText)
-		default:
-			fmt.Println(logText)
+	case INFO:
+		color.Cyan(logText)
+	case WARNING:
+		color.Yellow(logText)
+	case ERROR:
+		color.Red(logText)
+	case DEBUG:
+		color.White(logText)
+	default:
+		fmt.Println(logText)
 	}
 }

@@ -6,11 +6,11 @@ type AuthInput struct {
 }
 
 type OTPAuthInput struct {
-	UUID    string `json:"uuid" binding:"required"`
+	UUID         string `json:"uuid" binding:"required"`
 	OTP          string `json:"otp" binding:"required"`
 	OTPRequestID string `json:"otpRequestID" binding:"required"`
 }
 
-type LogoutInput struct {
+type JWT struct {
 	UUID string `json:"uuid" binding:"required"`
 }
