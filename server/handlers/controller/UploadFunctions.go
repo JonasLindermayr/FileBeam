@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/JonasLindermayr/FileBeam/internal"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -29,6 +30,9 @@ func UploadFile(c *gin.Context, userUUID uuid.UUID) (string, int64, string, erro
 	if err := c.SaveUploadedFile(header, dst); err != nil {
 		return "", 0, "", fmt.Errorf("could not save file")
 	}
+
+	internal.Log(fmt.Sprintf("User -> %s: uploaded File -> %s with a size of: %s",
+		userUUID.String(), fileID, internal.FormatBytes(header.Size)), internal.INFO)
 
 	return fileID, header.Size, ext, nil
 }
