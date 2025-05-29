@@ -1,5 +1,7 @@
 package types
 
+import "github.com/google/uuid"
+
 type AuthInput struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
@@ -12,5 +14,5 @@ type OTPAuthInput struct {
 }
 
 type JWT struct {
-	UUID string `json:"uuid" binding:"required"`
+	UUID uuid.UUID `json:"uuid" binding:"required"`
 }

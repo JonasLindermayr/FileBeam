@@ -12,6 +12,7 @@ import (
 )
 
 const Filepath = "data.db"
+const UploadFilePath = "./uploads"
 
 func main() {
 
@@ -19,6 +20,10 @@ func main() {
 		internal.Log("Database file not found. Please run migrate.go first.", internal.ERROR)
 		panic(err)
 	}
+	if _, err := os.Stat(UploadFilePath); os.IsNotExist(err) {
+		os.Mkdir(UploadFilePath, os.ModePerm)
+	}
+
 	var err error
 
 	internal.DB, err = gorm.Open(sqlite.Open(Filepath), &gorm.Config{})
@@ -44,6 +49,6 @@ func main() {
 
 	// CLOSED ROUTES -> MIDDLEWARE
 	router.POST("/api/user/logout", internal.JWTAuthMiddleware(), handlers.LogoutUserHandler)
-
+	router.POST("/api/upload", internal.JWTAuthMiddleware(), handlers.UploadHandler)
 	router.Run(":8072")
 }

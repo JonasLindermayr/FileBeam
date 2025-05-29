@@ -94,6 +94,13 @@ func VerifyOTP(c *gin.Context) {
 		return
 	}
 
+	var sessions []types.Session
+	internal.DB.Where("UserID = ?", userFound.ID).Find(&sessions)
+
+	for _, session := range sessions {
+		internal.DB.Delete(&session)
+	}
+
 	token, err := internal.GenerateToken(userFound.ID, time.Now().Add(time.Hour*24*30))
 	if err != nil {
 		internal.Log("Failed to generate token", internal.ERROR)
@@ -102,8 +109,8 @@ func VerifyOTP(c *gin.Context) {
 	}
 	internal.Log("Generated token", internal.INFO)
 	var session = &types.Session{
-		Token:      token,
-		EmployeeID: userFound.ID,
+		Token:  token,
+		UserID: userFound.ID,
 	}
 	internal.DB.Create(&session)
 	internal.Log("Session created for uuid: "+userFound.ID.String(), internal.INFO)

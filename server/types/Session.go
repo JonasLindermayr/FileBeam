@@ -7,7 +7,7 @@ import (
 
 type Session struct {
 	gorm.Model
-	ID uint `json:"id"`
-	Token string `json:"key" gorm:"unique"`
-	EmployeeID uuid.UUID `json:"employeeId"`
+	ID     uint      `json:"id"`
+	Token  string    `json:"key" gorm:"unique"`
+	UserID uuid.UUID `json:"userId"`
 }
